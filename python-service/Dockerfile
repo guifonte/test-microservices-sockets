@@ -6,6 +6,6 @@ COPY . /app
 
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
-EXPOSE 5000
+EXPOSE 80
 
-CMD ["python", "flask-service.py"]
+CMD ["python", "python-service.py"]

@@ -16,7 +16,7 @@ app.use((req, res, next) => {
 })
 
 app.get('/', (req, res, next) => {
-    axios.get("http://localhost:5000/").then(response => {
+    axios.get("http://python:80/").then(response => {
         res.send(response.data)
     }).catch(error => {
         res.send("No Hello World!")

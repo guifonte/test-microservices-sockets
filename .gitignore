@@ -1,3 +1,6 @@
 python-service/venv/
+env/
 python-service/.idea/
 node-service/node_modules/
+.vscode/
+python-service/__pycache__
