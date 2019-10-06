@@ -1,11 +1,11 @@
 version: "3"
 services:
-  python:
-    image: guifonte/python-service:latest
-    ports:
-      - "4001:80"
   node:
-    image: guifonte/node-service:latest
+    build: ./node-service
     ports:
-      - "4000:3000"
- 
+      - "${NODE_SERVER_PORT}:3000"
+    
+  python:
+    build: ./python-service
+    #ports:
+    #  - "${PYTHON_SERVER_PORT}:80"

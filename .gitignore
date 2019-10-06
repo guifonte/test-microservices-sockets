@@ -4,3 +4,5 @@ python-service/.idea/
 node-service/node_modules/
 .vscode/
 python-service/__pycache__
+python-service/wsgi.pyc
+python-service/pyservice.pyc
