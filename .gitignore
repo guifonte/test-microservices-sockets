@@ -1,5 +1,5 @@
 python-service/venv/
-env/
+.venv/
 python-service/.idea/
 node-service/node_modules/
 .vscode/
