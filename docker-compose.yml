@@ -4,11 +4,32 @@ services:
     build: ./node-service
     ports:
       - "${NODE_SERVER_PORT}:3000"
-  python:
-    build: ./python-service
-    ports:      
-      - "${PYTHON_SERVER_PORT}:4000"
     depends_on:
       - redis
+      - python
+
+  python:
+    build: ./python-service
+    #ports:      
+    #  - "${PYTHON_SERVER_PORT}:4000"
+    depends_on:
+      - redis
+      - celery
+
+  celery:
+    build: ./celery-service
+    #user: nobody
+    depends_on:
+      - redis
+
+  monitor:
+    build: ./celery-service
+    ports:
+      - "5555:5555"
+    entrypoint: flower
+    command: -A tasks --port=5555 --broker=redis://redis:6379/0
+    depends_on:
+      - redis
+
   redis:
     image: redis

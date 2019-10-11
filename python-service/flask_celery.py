@@ -13,6 +13,7 @@ This is necessary to properly integrate Celery with Flask.
 def make_celery(app):
     celery = Celery(app.import_name, backend=app.config['CELERY_RESULT_BACKEND'],
                     broker=app.config['CELERY_BROKER_URL'])
+    print(app.import_name)
     celery.conf.update(app.config)
     TaskBase = celery.Task
     class ContextTask(TaskBase):

@@ -1,5 +1,5 @@
 flask
 gevent
 celery
-flask_socketio
+gunicorn
 redis

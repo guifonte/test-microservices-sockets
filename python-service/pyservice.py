@@ -1,8 +1,13 @@
 import os
-from flask import Flask
+import sys
+import time
+import json
+import redis
+import json
+from flask import Flask, request
 from celery import Celery
-from flask_socketio import SocketIO
 from flask_celery import make_celery
+
 
 app = Flask(__name__)
 
@@ -12,15 +17,29 @@ CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', 'redis://localho
 )
 
 celery = make_celery(app)
+r = redis.Redis(host='redis',port=6379, db=0)
 
-socketio = SocketIO(app, message_queue='redis://redis:6379/0')
+@app.route("/", methods=['GET', 'POST'])
+def basic():
+    if request.method =='POST':
+        return iseeyou(request.json['id'])
+    else:
+        return hello()
 
-@app.route("/")
 def hello():
-    print("hello")
+    print("hello", file=sys.stdout)
+    sys.stdout.flush()
     return "Hello World from Flask!"
+
+def iseeyou(id):
+    print("iseeyou " + id, file=sys.stdout)
+    sys.stdout.flush()
+    r.publish('counter-update', json.dumps({"id": id,"progress": "STARTING"}))
+    celery.send_task('pyservice.run', args=[id], kwargs={})
+    
+    return json.dumps({"id": id,"message": "Flask sees you: "})
 
 
 if __name__ == "__main__":
-    socketio.run(app, host='0.0.0.0', port=5000)
+    app.run()
 
