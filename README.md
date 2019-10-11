@@ -1,4 +1,4 @@
-# Docker Nodejs Flask Celery Redis
+# Docker Nodejs Socket.io Flask Celery Redis
 
 This repository contain an example code which shows the integration between a [Nodejs](https://nodejs.org/en/), [Socket.io](https://socket.io), [Flask](https://palletsprojects.com/p/flask/) with [Gunicorn](https://gunicorn.org/), [Celery](http://www.celeryproject.org/) with [Flower](https://flower.readthedocs.io/en/latest/) and [Redis Pub/Sub](https://redis.io/topics/pubsub) within microservices architecture using [Docker Compose](https://docs.docker.com/compose/). The application uses the basic Socket.io example of a chat app, but uses a Nodejs server to orchestrate http requests to the Flask server, that calls Celery workers to do time-consuming process. The Celery workers uses Redis Pub/Sub to send feedback to the Nodejs server, that redirects the messages to the right user socket. Flower is also utilized as a monitoring tool for the celery workers. Everything runs in separated containers, that allows easy scaling.
 
